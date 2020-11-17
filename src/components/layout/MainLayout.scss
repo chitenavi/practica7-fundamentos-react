@@ -1,0 +1,42 @@
+@import '../../scss/_variables.scss';
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: $bg-color-sec;
+
+  width: 100%;
+
+  &-header {
+    height: 80px;
+    color: $font-color-sec;
+    background-color: $bg-color-ter;
+    box-shadow: $shadow-primary;
+  }
+  &-main {
+    flex: 1;
+    margin: 15px auto 20px auto;
+    color: $font-color-pri;
+    width: 100%;
+    max-width: $max-width;
+
+    &--title {
+      text-align: center;
+    }
+  }
+
+  &-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $font-color-sec;
+    background-color: $bg-color-ter;
+    height: $footer-height;
+    box-shadow: $shadow-primary;
+
+    & p {
+      margin: 0;
+    }
+  }
+}
