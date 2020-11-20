@@ -5,7 +5,7 @@ module.exports = {
     es6: true,
     node: true,
   },
-  // parser: 'babel-eslint',
+  parser: 'babel-eslint',
   extends: ['plugin:react/recommended', 'airbnb', 'prettier', 'prettier/react'],
   globals: {
     Atomics: 'readonly',

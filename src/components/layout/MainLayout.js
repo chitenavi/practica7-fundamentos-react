@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './MainLayout.scss';
 
+import { Link } from 'react-router-dom';
+import Header from './Header';
+
 const MainLayout = ({ children, title }) => {
   return (
     <div className="layout">
-      <header className="layout-header">
-        <h1>Logo | Navbar</h1>
-      </header>
+      <Header className="layout-header" />
       <main className="layout-main">
         <h2 className="layout-main--title">{title}</h2>
         <section className="layout-main--section">{children}</section>

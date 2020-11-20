@@ -1,0 +1,36 @@
+@import '../../scss/variables';
+
+.loginPage {
+  margin: 2rem auto 0 auto;
+  width: 350px;
+}
+
+.formLogin {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  align-items: center;
+
+  padding: 2rem 1rem;
+  background-color: $bg-color-ter;
+  box-shadow: $shadow-primary;
+  border-radius: 1rem;
+
+  &-field {
+    width: 300px;
+
+    & button {
+      width: 100%;
+    }
+
+    & input[type='text'],
+    & input[type='password'] {
+      height: 2rem;
+      width: 100%;
+      border-radius: 0.5rem;
+      font-family: inherit;
+      font-size: 1.2rem;
+    }
+  }
+}

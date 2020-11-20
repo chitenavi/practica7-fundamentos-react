@@ -1,0 +1,48 @@
+$primary-color: #8dc973;
+$secondary-color: #f78f1e;
+$tertiary-color: #e55226;
+
+.button {
+  outline-style: none;
+  border: none;
+  border-radius: 1rem;
+  width: 120px;
+  height: 35px;
+  text-align: center;
+  font-weight: bold;
+  text-decoration: none;
+  text-transform: uppercase;
+  display: inline-block;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &.primary {
+    background-color: $primary-color;
+
+    &:hover {
+      background-color: #b8db9a;
+    }
+  }
+
+  &.secondary {
+    background-color: transparent;
+    border: solid $secondary-color 2px;
+    color: $secondary-color;
+
+    &:hover {
+      background-color: $secondary-color;
+      color: black;
+    }
+  }
+
+  &.tertiary {
+    background-color: red;
+
+    &:hover {
+      background-color: rgb(255, 80, 80);
+    }
+  }
+}
