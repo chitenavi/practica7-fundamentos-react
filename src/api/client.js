@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const { REACT_APP_BASE_API_URL: baseURL } = process.env;
+const baseURL = process.env.REACT_APP_API_URL;
 
 const client = axios.create({
   baseURL,
@@ -15,8 +15,8 @@ const removeAuthorizationHeader = () => {
 };
 
 client.login = credentials =>
-  client.post('/apiv1/auth', credentials).then(auth => {
-    setAuthorizationHeader(auth.accessToken);
+  client.post('/apiv1/auth/login', credentials).then(auth => {
+    setAuthorizationHeader(auth.token);
     return auth;
   });
 
@@ -33,13 +33,13 @@ client.logout = () =>
 client.interceptors.response.use(
   response => response.data,
   error => {
-    return error.message;
+    throw error;
   },
 );
 
-export const configureClient = accessToken => {
-  if (accessToken) {
-    setAuthorizationHeader(accessToken);
+export const setupTokenClient = token => {
+  if (token) {
+    setAuthorizationHeader(token);
   }
 };
 

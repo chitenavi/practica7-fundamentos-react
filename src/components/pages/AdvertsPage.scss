@@ -1,0 +1,17 @@
+@import '../../scss/variables';
+
+.advertsPage {
+  display: flex;
+  flex-direction: column;
+  border: solid 1px darkgray;
+  padding: 0.5rem;
+  gap: 2rem;
+
+  &-filter {
+    align-self: center;
+    background-color: $bg-color-ter;
+    box-shadow: $shadow-primary;
+    border-radius: 1rem;
+    padding: 1rem;
+  }
+}

@@ -1,40 +1,50 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { Link } from 'react-router-dom';
+import { Link, Redirect, useLocation } from 'react-router-dom';
 import { logout } from '../../api/auth';
 import './Header.scss';
 
 import Button from '../shared/Button';
-import AuthContext from '../auth/AuthContext';
+import { AuthContextConsumer } from '../auth/AuthContext';
 
-const Header = ({ className, ...props }) => {
-  const { isLogged, onLogout } = useContext(AuthContext);
-
+const Header = ({ className }) => {
+  const actualPath = useLocation().pathname;
   return (
-    <header className={classNames('header', className)}>
-      <Link to="/">
-        <div className="header-logo">
-          <img src="logo192.png" alt="logo" />
-        </div>
-      </Link>
-
-      <nav className="header-nav">
-        {isLogged ? (
-          <Button
-            className="loginPage-submit tertiary"
-            onClick={() => logout().then(onLogout)}
-            disabled={false}
-          >
-            Log out
-          </Button>
-        ) : (
-          <Link to="/login">
-            <Button className="loginPage-submit primary">Log in</Button>
+    <AuthContextConsumer>
+      {({ isLogged, onLogout }) => (
+        <header className={classNames('header', className)}>
+          <Link to="/">
+            <div className="header-logo">
+              <img src={`${process.env.PUBLIC_URL}/logo192.png`} alt="logo" />
+            </div>
           </Link>
-        )}
-      </nav>
-    </header>
+
+          <nav className="header-nav">
+            {isLogged ? (
+              <>
+                {actualPath === '/adverts' ? (
+                  <Link to="/adverts/new">
+                    <Button className="primary">New Advert</Button>
+                  </Link>
+                ) : (
+                  <Link to="/adverts">
+                    <Button className="primary">Adverts</Button>
+                  </Link>
+                )}
+
+                <Button
+                  className="tertiary"
+                  onClick={() => logout().then(onLogout)}
+                >
+                  Log out
+                </Button>
+              </>
+            ) : null}
+          </nav>
+        </header>
+      )}
+    </AuthContextConsumer>
   );
 };
 

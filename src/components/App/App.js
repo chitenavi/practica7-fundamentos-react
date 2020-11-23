@@ -1,23 +1,26 @@
 import React, { useState } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import MainLayout from '../layout/MainLayout';
 import LoginPage from '../auth/LoginPage';
 import { AuthContextProvider } from '../auth/AuthContext';
+import PrivateRoute from '../auth/PrivateRoute';
+import AdvertsPage from '../pages/AdvertsPage';
 
-function App() {
-  const [loggedUserId, setLoggedUserId] = useState(null);
+function App({ initialToken }) {
+  const [tokenUser, setTokenUser] = useState(initialToken);
 
-  const handleLogin = loggedId =>
+  const handleLogin = token =>
     new Promise(resolve => {
-      setLoggedUserId(loggedId);
+      setTokenUser(token);
       resolve();
     });
-  const handleLogout = () => setLoggedUserId(null);
+  const handleLogout = () => setTokenUser(null);
 
   return (
     <AuthContextProvider
       value={{
-        isLogged: !!loggedUserId,
+        isLogged: !!tokenUser,
         onLogin: handleLogin,
         onLogout: handleLogout,
       }}
@@ -25,12 +28,25 @@ function App() {
       <div className="App">
         <Switch>
           <Route path="/" exact>
-            <MainLayout title="Bienvenido a Nodepop SPA">
-              <p>Página Inicio Home</p>
-            </MainLayout>
+            {tokenUser ? <Redirect to="/adverts" /> : <Redirect to="/login" />}
           </Route>
+          <PrivateRoute path="/adverts" exact>
+            <AdvertsPage />
+          </PrivateRoute>
+          <PrivateRoute path="/advert/:id" exact>
+            <MainLayout title="Advert Detail">
+              <div>Página de Detalle</div>
+            </MainLayout>
+          </PrivateRoute>
+          <PrivateRoute path="/adverts/new" exact>
+            <MainLayout title="New Advert">
+              <div>Página de Creación de Anuncio</div>
+            </MainLayout>
+          </PrivateRoute>
           <Route path="/login" exact>
-            <LoginPage />
+            {({ history }) => (
+              <LoginPage onLogin={handleLogin} history={history} />
+            )}
           </Route>
           <Route path="/404" exact>
             <div
@@ -51,5 +67,9 @@ function App() {
     </AuthContextProvider>
   );
 }
+
+App.propTypes = {
+  initialToken: PropTypes.string.isRequired,
+};
 
 export default App;
