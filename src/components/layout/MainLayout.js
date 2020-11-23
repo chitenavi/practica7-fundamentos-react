@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './MainLayout.scss';
 
-import { Link } from 'react-router-dom';
 import Header from './Header';
 
 const MainLayout = ({ children, title }) => {
