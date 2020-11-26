@@ -3,7 +3,7 @@ import client from './client';
 const adverstUrl = 'apiv1/adverts';
 
 export const getAdverts = (filterParams = '') => {
-  const url = `${adverstUrl}${filterParams}`;
+  const url = `${adverstUrl}?${filterParams}`;
   return client.get(url);
 };
 

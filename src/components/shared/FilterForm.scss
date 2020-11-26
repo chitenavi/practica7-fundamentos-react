@@ -1,0 +1,17 @@
+.formFilter {
+  display: flex;
+  flex-direction: column;
+  min-width: 400px;
+  gap: 1rem;
+
+  &-field {
+    &--label {
+      font-size: 1.1rem;
+      margin-right: 0.2rem;
+    }
+
+    &.centered {
+      text-align: center;
+    }
+  }
+}

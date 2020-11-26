@@ -1,6 +1,4 @@
-$primary-color: #8dc973;
-$secondary-color: #f78f1e;
-$tertiary-color: #e55226;
+@import '../../scss/variables';
 
 .button {
   outline-style: none;
@@ -9,14 +7,22 @@ $tertiary-color: #e55226;
   width: 120px;
   height: 35px;
   text-align: center;
-  font-weight: bold;
+  font-weight: 500;
   text-decoration: none;
+  line-height: initial;
   text-transform: uppercase;
+  color: black;
   display: inline-block;
-  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
 
   &:hover {
-    cursor: pointer;
+    box-shadow: $shadow-primary;
+    transform: scale(1.07);
   }
 
   &.primary {
@@ -39,10 +45,10 @@ $tertiary-color: #e55226;
   }
 
   &.tertiary {
-    background-color: red;
+    background-color: $tertiary-color;
 
     &:hover {
-      background-color: rgb(255, 80, 80);
+      background-color: #e28b70;
     }
   }
 }
