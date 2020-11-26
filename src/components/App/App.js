@@ -6,6 +6,7 @@ import LoginPage from '../auth/LoginPage';
 import { AuthContextProvider } from '../auth/AuthContext';
 import PrivateRoute from '../auth/PrivateRoute';
 import AdvertsPage from '../pages/AdvertsPage';
+import AdvertDetailPage from '../pages/AdvertDetailPage';
 
 function App({ initialToken }) {
   const [tokenUser, setTokenUser] = useState(initialToken);
@@ -34,9 +35,7 @@ function App({ initialToken }) {
             <AdvertsPage />
           </PrivateRoute>
           <PrivateRoute path="/advert/:id" exact>
-            <MainLayout title="Advert Detail">
-              <div>Página de Detalle</div>
-            </MainLayout>
+            <AdvertDetailPage />
           </PrivateRoute>
           <PrivateRoute path="/adverts/new" exact>
             <MainLayout title="New Advert">

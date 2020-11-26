@@ -6,7 +6,7 @@ import './Button.scss';
 const Button = ({ type, className, disabled, children, onClick }) => {
   return (
     <button
-      className={classNames('button', className)}
+      className={classNames(`button ${disabled && 'disabled'}`, className)}
       type={type === 'submit' ? 'submit' : 'button'}
       onClick={onClick}
       disabled={disabled}

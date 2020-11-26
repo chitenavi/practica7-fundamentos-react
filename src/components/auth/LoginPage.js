@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Alert } from 'antd';
 import MainLayout from '../layout/MainLayout';
+import Loader from '../shared/LoaderStyled';
 import Button from '../shared/Button';
 import { login } from '../../api/auth';
 
@@ -17,9 +19,13 @@ class LoginPage extends React.Component {
     error: null,
   };
 
-  componentDidMount() {
-    console.log(this.state);
-  }
+  canSubmit = () => {
+    const {
+      form: { email, password },
+      submitting,
+    } = this.state;
+    return !submitting && email && password;
+  };
 
   handleSubmit = async event => {
     event.preventDefault();
@@ -30,7 +36,7 @@ class LoginPage extends React.Component {
 
     try {
       const authResponse = await login(form);
-      console.log(authResponse);
+      // console.log(authResponse);
       if (!authResponse.ok) {
         throw new Error(authResponse.error);
       }
@@ -60,6 +66,7 @@ class LoginPage extends React.Component {
     const {
       form: { email, password, remcredentials },
       error,
+      submitting,
     } = this.state;
     return (
       <MainLayout title="Welcome to Nodepop SPA">
@@ -97,12 +104,25 @@ class LoginPage extends React.Component {
               </label>
             </div>
             <div className="formLogin-field">
-              <Button type="submit" className="secondary">
+              <Button
+                type="submit"
+                className="secondary"
+                disabled={!this.canSubmit()}
+              >
                 Log in
               </Button>
             </div>
           </form>
-          {error && <div className="loginPage-error">{error.message}</div>}
+          {submitting && (
+            <div className="loginPage-loading">
+              <Loader size="medium" />
+            </div>
+          )}
+          {error && (
+            <div className="loginPage-error">
+              <Alert message={error.message} type="error" />
+            </div>
+          )}
         </div>
       </MainLayout>
     );
@@ -111,7 +131,7 @@ class LoginPage extends React.Component {
 
 LoginPage.propTypes = {
   onLogin: PropTypes.func.isRequired,
-  history: PropTypes.objectOf(PropTypes.object).isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default LoginPage;

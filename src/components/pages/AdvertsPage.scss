@@ -3,9 +3,9 @@
 .advertsPage {
   display: flex;
   flex-direction: column;
-  border: solid 1px darkgray;
+  //border: solid 1px darkgray;
   padding: 0.5rem;
-  gap: 2rem;
+  gap: 3rem;
 
   &-filter {
     align-self: center;
@@ -13,5 +13,28 @@
     box-shadow: $shadow-primary;
     border-radius: 1rem;
     padding: 1rem;
+  }
+
+  &-content {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: lightgray;
+    padding: 1rem 0.5rem;
+    border-radius: 0.3rem;
+    box-shadow: $shadow-primary;
+
+    &--noads {
+      margin: 0 auto;
+      text-align: center;
+      & h3 {
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+      }
+    }
+
+    &--error {
+      width: 100%;
+      text-align: center;
+    }
   }
 }
