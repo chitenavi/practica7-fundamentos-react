@@ -31,12 +31,9 @@ const makeQueryString = form => {
 };
 
 const AdvertsPage = () => {
-  const initialUserFilter = storage.get('userFilterForm') || defaultFilter;
-
+  const userFilter = storage.get('userFilterForm') || defaultFilter;
   const [adverts, setAdverts] = useState([]);
-  const [queryString, setQueryString] = useState(
-    makeQueryString(initialUserFilter),
-  );
+  const [queryString, setQueryString] = useState(makeQueryString(userFilter));
   const [loadingAds, setLoadingAds] = useState(true);
   const [error, setError] = useState(null);
 
@@ -44,7 +41,7 @@ const AdvertsPage = () => {
     // Save filter data on LocalStorage
     storage.set('userFilterForm', form);
 
-    // Apply filter
+    // Generate query string,
     setQueryString(makeQueryString(form));
   };
 
@@ -85,7 +82,9 @@ const AdvertsPage = () => {
               </Link>
             </>
           ) : (
-            <h3>Sorry, there are no ads with that filters...</h3>
+            <div>
+              <h3>Sorry, there are no ads with that filters...</h3>
+            </div>
           )}
         </div>
       );
@@ -109,10 +108,7 @@ const AdvertsPage = () => {
     <MainLayout title="Adverts">
       <div className="advertsPage">
         <div className="advertsPage-filter">
-          <FilterForm
-            initialFilter={initialUserFilter}
-            onSubmit={handleSubmit}
-          />
+          <FilterForm userFilter={userFilter} onSubmit={handleSubmit} />
         </div>
         <div className="advertsPage-content">
           {loadingAds ? <Loader /> : renderContent()}

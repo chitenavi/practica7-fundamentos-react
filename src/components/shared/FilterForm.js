@@ -5,12 +5,12 @@ import Button from './Button';
 import 'antd/dist/antd.css';
 import './FilterForm.scss';
 
-function FilferForm({ onSubmit, initialFilter }) {
-  const [form, setForm] = useState(initialFilter);
+function FilferForm({ onSubmit, userFilter }) {
+  const [form, setForm] = useState(userFilter);
   const { name, type, price, tags } = form;
   const { Option } = Select;
 
-  const onSumbitForm = ev => {
+  const onSubmitForm = ev => {
     ev.preventDefault();
     onSubmit(form);
   };
@@ -21,7 +21,7 @@ function FilferForm({ onSubmit, initialFilter }) {
   };
   return (
     <div>
-      <form onSubmit={onSumbitForm} className="formFilter">
+      <form onSubmit={onSubmitForm} className="formFilter">
         <div className="formFilter-field">
           <Input
             onChange={handleFormChange}
@@ -45,7 +45,9 @@ function FilferForm({ onSubmit, initialFilter }) {
           </Radio.Group>
         </div>
         <div className="formFilter-field">
-          <span className="formFilter-field--label">Price: </span>
+          <span className="formFilter-field--label">
+            Price: {`${price[0]}€ - ${price[1]}€`}
+          </span>
           <Slider
             onChange={value => {
               handleFormChange({ target: { value, name: 'price' } });
@@ -85,7 +87,7 @@ function FilferForm({ onSubmit, initialFilter }) {
 
 FilferForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  initialFilter: PropTypes.shape({
+  userFilter: PropTypes.shape({
     name: PropTypes.string,
     type: PropTypes.string,
     price: PropTypes.arrayOf(PropTypes.number),

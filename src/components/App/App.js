@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import MainLayout from '../layout/MainLayout';
 import LoginPage from '../auth/LoginPage';
 import { AuthContextProvider } from '../auth/AuthContext';
 import PrivateRoute from '../auth/PrivateRoute';
 import AdvertsPage from '../pages/AdvertsPage';
 import AdvertDetailPage from '../pages/AdvertDetailPage';
+import NewAdvertPage from '../pages/NewAdvertPage';
+import NotFoundPage from '../pages/NotFoundPage';
 
 function App({ initialToken }) {
   const [tokenUser, setTokenUser] = useState(initialToken);
@@ -38,9 +39,7 @@ function App({ initialToken }) {
             <AdvertDetailPage />
           </PrivateRoute>
           <PrivateRoute path="/adverts/new" exact>
-            <MainLayout title="New Advert">
-              <div>Página de Creación de Anuncio</div>
-            </MainLayout>
+            <NewAdvertPage />
           </PrivateRoute>
           <Route path="/login" exact>
             {({ history }) => (
@@ -48,15 +47,7 @@ function App({ initialToken }) {
             )}
           </Route>
           <Route path="/404" exact>
-            <div
-              style={{
-                textAlign: 'center',
-                fontSize: 48,
-                fontWeight: 'bold',
-              }}
-            >
-              404 | Not found page
-            </div>
+            <NotFoundPage />
           </Route>
           <Route>
             <Redirect to="/404" />

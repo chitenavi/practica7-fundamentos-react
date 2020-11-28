@@ -30,7 +30,7 @@ class LoginPage extends React.Component {
   handleSubmit = async event => {
     event.preventDefault();
 
-    this.setState({ submitting: true });
+    this.setState({ submitting: true, error: null });
     const { onLogin, history } = this.props;
     const { form } = this.state;
 
