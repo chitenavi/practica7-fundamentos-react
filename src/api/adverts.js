@@ -17,7 +17,8 @@ export const deleteAdvert = advertId => {
   return client.delete(url);
 };
 
-// export const createAdvert = tweet => {
-//   const url = `${adverstUrl}`;
-//   return client.post(url, tweet);
-// };
+export const createAdvert = data => {
+  const url = `${adverstUrl}`;
+  const headers = { 'Content-Type': 'multipart/form-data' };
+  return client.post(url, data, headers);
+};

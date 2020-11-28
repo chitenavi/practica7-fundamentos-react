@@ -28,8 +28,6 @@ client.logout = () =>
     resolve();
   });
 
-// Con lo siguiente nos ahorramos otra promesa
-// con los datos obtenidos
 client.interceptors.response.use(
   response => response.data,
   error => {

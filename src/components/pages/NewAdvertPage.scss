@@ -1,0 +1,44 @@
+@import '../../scss/variables';
+
+.formNewAd {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  width: 400px;
+  gap: 1rem;
+  background-color: $bg-color-ter;
+  box-shadow: $shadow-primary;
+  border-radius: 1rem;
+  padding: 1rem;
+
+  &-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+  }
+
+  &-field {
+    &--label {
+      font-size: 1.1rem;
+      margin-right: 0.2rem;
+    }
+
+    &.centered {
+      text-align: center;
+    }
+  }
+  &-error {
+    margin-top: 1rem;
+    text-align: center;
+  }
+}
+
+.newAdPage {
+  &-error {
+    margin-top: 1rem;
+    text-align: center;
+    max-width: 400px;
+    margin: 2rem auto;
+  }
+}

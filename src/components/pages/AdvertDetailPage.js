@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+import { Alert } from 'antd';
 import MainLayout from '../layout/MainLayout';
 import Loader from '../shared/LoaderStyled';
 import Button from '../shared/Button';
@@ -13,7 +14,7 @@ function AdvertDetailPage() {
   const [advert, setAdvert] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [loadingAd, setLoadingAd] = useState(true);
-  const [error, setError] = useState(null);
+  const [errorDeleting, setErrorDeleting] = useState(null);
   const serverUrl = process.env.REACT_APP_API_URL;
 
   const getAdDetail = async adId => {
@@ -23,22 +24,21 @@ function AdvertDetailPage() {
       if (!ad) history.push('/404');
       setAdvert(ad);
     } catch (err) {
-      setError(err);
+      history.push('/404');
     } finally {
       setLoadingAd(false);
     }
   };
 
   const deleteAd = async () => {
-    console.log(`ID: ${id} => Eliminado`);
+    setErrorDeleting(null);
     try {
       const result = await deleteAdvert(id);
       if (result.ok) history.push('/adverts');
+      else throw new Error('Something went wrong!!');
     } catch (err) {
-      console.log(err);
-      setError(err);
+      setErrorDeleting(err);
     }
-    // history.push('/adverts');
   };
 
   useEffect(() => {
@@ -46,9 +46,6 @@ function AdvertDetailPage() {
   }, []);
 
   const renderContent = () => {
-    if (error) {
-      return history.push('/404');
-    }
     return (
       <div className="product">
         <h2 className="product-title">{advert.name}</h2>
@@ -75,18 +72,6 @@ function AdvertDetailPage() {
         <Button className="secondary" onClick={() => setShowModal(true)}>
           Delete
         </Button>
-        <ModalConfirm
-          title="Delete Advert"
-          onClose={e => {
-            setShowModal(false);
-            if (e.target.classList.contains('tertiary')) {
-              deleteAd();
-            }
-          }}
-          show={showModal}
-        >
-          Are you sure to delete it?
-        </ModalConfirm>
       </div>
     );
   };
@@ -94,6 +79,23 @@ function AdvertDetailPage() {
   return (
     <MainLayout title="Advert Detail">
       {loadingAd ? <Loader size="medium" /> : renderContent()}
+      <ModalConfirm
+        title="Delete Advert"
+        onClose={e => {
+          setShowModal(false);
+          if (e.target.classList.contains('tertiary')) {
+            deleteAd();
+          }
+        }}
+        show={showModal}
+      >
+        Are you sure to delete it?
+      </ModalConfirm>
+      <div className="adDetail-error">
+        {errorDeleting && (
+          <Alert message={errorDeleting.message} type="error" />
+        )}
+      </div>
     </MainLayout>
   );
 }
