@@ -32,6 +32,11 @@ const Header = ({ className }) => {
                     <Button className="primary">Adverts</Button>
                   </Link>
                 )}
+                {actualPath.startsWith('/advert/') && (
+                  <Link to="/adverts/new">
+                    <Button className="primary">New Advert</Button>
+                  </Link>
+                )}
 
                 <Button
                   className="tertiary"
