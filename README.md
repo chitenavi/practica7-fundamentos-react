@@ -13,7 +13,7 @@ npm install
 
 ## Usage
 
-> First you need the backend running before start the application, create .env file with API url, see .env.example.
+> First you need the backend running before start the application, create .env file with API url in root folder, see .env.example.
 > By default the app run on port 3000, use different port for API if you run both on the same machine.
 >
 > For start run:
@@ -24,7 +24,7 @@ npm start
 
 ## Author
 
-👤 **chitenavi@gmail.com <chitenavi@gmail.com>**
+👤 ** Ivan Chinea <chitenavi@gmail.com>**
 
 - Github: [@chitenavi](https://github.com/chitenavi)
 
