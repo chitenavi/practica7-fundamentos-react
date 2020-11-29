@@ -3,7 +3,7 @@
   <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
 </p>
 
-> Single page application to manage an ad API. We can see the ads, create and delete them. All using React with the concepts seen in the module.
+> Single page application to manage an ad API. We can see the ads, filter, create and delete them. All programming using _React_, with the concepts seen in the module.
 
 ## Install
 
