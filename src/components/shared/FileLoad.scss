@@ -1,0 +1,23 @@
+@import '../../scss/variables';
+
+.fileLoad {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  &-btn {
+    cursor: pointer;
+    background-color: #fff;
+    max-width: 200px;
+    color: black;
+    padding: 0.5rem;
+    border-radius: 0.2rem;
+    margin: 0 auto;
+    background-color: $primary-color;
+
+    &:hover {
+      box-shadow: $shadow-primary;
+      transform: scale(1.04);
+    }
+  }
+}
