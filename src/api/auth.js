@@ -12,4 +12,5 @@ export const login = credentials =>
 export const logout = () =>
   client.logout().then(() => {
     storage.remove('userToken');
+    storage.remove('userFilterForm');
   });
