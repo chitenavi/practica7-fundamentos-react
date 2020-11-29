@@ -4,6 +4,7 @@ import './FileLoad.scss';
 
 const FileLoad = ({ onFileSelect }) => {
   const [fileName, setFileName] = useState('');
+
   const handleFileInput = e => {
     const file = e.target.files[0];
 

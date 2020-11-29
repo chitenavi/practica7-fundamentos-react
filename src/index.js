@@ -13,9 +13,7 @@ setupTokenClient(initialToken);
 
 ReactDOM.render(
   <BrowserRouter>
-    {/* <React.StrictMode> */}
     <App initialToken={initialToken} />
-    {/* </React.StrictMode> */}
   </BrowserRouter>,
   document.getElementById('root'),
 );
