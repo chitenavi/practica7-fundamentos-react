@@ -3,6 +3,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { Alert } from 'antd';
 import MainLayout from '../layout/MainLayout';
 import Loader from '../shared/LoaderStyled';
+import LoaderPage from '../shared/LoaderPage';
 import Button from '../shared/Button';
 import ModalConfirm from '../shared/ModalConfirm';
 import { getAdvertDetail, deleteAdvert } from '../../api/adverts';
@@ -14,6 +15,7 @@ function AdvertDetailPage() {
   const [advert, setAdvert] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [loadingAd, setLoadingAd] = useState(true);
+  const [deletingAd, setDeletingAd] = useState(false);
   const [errorDeleting, setErrorDeleting] = useState(null);
   const serverUrl = process.env.REACT_APP_API_URL;
 
@@ -21,22 +23,25 @@ function AdvertDetailPage() {
     setLoadingAd(true);
     try {
       const { result: ad } = await getAdvertDetail(adId);
-      if (!ad) history.push('/404');
-      setAdvert(ad);
-    } catch (err) {
-      history.push('/404');
-    } finally {
       setLoadingAd(false);
+      if (!ad) history.push('/404');
+      else setAdvert(ad);
+    } catch (err) {
+      setLoadingAd(false);
+      history.push('/404');
     }
   };
 
   const deleteAd = async () => {
+    setDeletingAd(true);
     setErrorDeleting(null);
     try {
       const result = await deleteAdvert(id);
+      setDeletingAd(false);
       if (result.ok) history.push('/adverts');
-      else throw new Error('Something went wrong!!');
+      else setErrorDeleting({ message: 'Something went wrong!' });
     } catch (err) {
+      setDeletingAd(false);
       setErrorDeleting(err);
     }
   };
@@ -69,7 +74,13 @@ function AdvertDetailPage() {
             </p>
           </div>
         </div>
-        <Button className="secondary" onClick={() => setShowModal(true)}>
+        <Button
+          className="secondary"
+          onClick={() => {
+            setShowModal(true);
+            setErrorDeleting(null);
+          }}
+        >
           Delete
         </Button>
       </div>
@@ -78,22 +89,29 @@ function AdvertDetailPage() {
 
   return (
     <MainLayout title="Advert Detail">
-      {loadingAd ? <Loader size="medium" /> : renderContent()}
+      {loadingAd ? <Loader size="medium" /> : advert && renderContent()}
       <ModalConfirm
         title="Delete Advert"
-        onClose={e => {
+        onClose={isConfirmed => {
+          if (isConfirmed) deleteAd();
+
           setShowModal(false);
-          if (e.target.classList.contains('tertiary')) {
-            deleteAd();
-          }
         }}
         show={showModal}
       >
         Are you sure to delete it?
       </ModalConfirm>
-      <div className="adDetail-error">
-        {errorDeleting && (
-          <Alert message={errorDeleting.message} type="error" />
+      <div className="adDelete">
+        {deletingAd ? (
+          <LoaderPage />
+        ) : (
+          errorDeleting && (
+            <Alert
+              className="adDelete-error"
+              message={errorDeleting.message}
+              type="error"
+            />
+          )
         )}
       </div>
     </MainLayout>

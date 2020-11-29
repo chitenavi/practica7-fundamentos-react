@@ -4,7 +4,7 @@ import { Select, Radio, Input, InputNumber, Alert } from 'antd';
 import useForm from '../hooks/useForm';
 import MainLayout from '../layout/MainLayout';
 import Button from '../shared/Button';
-import Loader from '../shared/LoaderStyled';
+import LoaderPage from '../shared/LoaderPage';
 import FileLoad from '../shared/FileLoad';
 import { createAdvert } from '../../api/adverts';
 import './NewAdvertPage.scss';
@@ -12,10 +12,10 @@ import './NewAdvertPage.scss';
 const NewAdvertPage = () => {
   const { Option } = Select;
   const history = useHistory();
+  const [selectedFile, setSelectedFile] = useState(null);
   const [error, setError] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [form, onChange] = useForm();
-  const [img, setImg] = useState(null);
   const { name, sale, tags, price } = form;
 
   const canSubmit = () => {
@@ -33,14 +33,14 @@ const NewAdvertPage = () => {
         else formData.append(key, form[key]);
       });
 
-      if (img) formData.append('photo', img);
+      if (selectedFile) formData.append('photo', selectedFile);
 
-      const result = await createAdvert(formData);
-      if (result.ok) history.push('/adverts');
-    } catch (err) {
-      setError(err);
-    } finally {
+      const res = await createAdvert(formData);
       setSubmitting(false);
+      if (res.ok) history.push(`/advert/${res.result._id}`);
+    } catch (err) {
+      setSubmitting(false);
+      setError(err);
     }
   };
 
@@ -102,15 +102,7 @@ const NewAdvertPage = () => {
           </Select>
         </div>
         <div className="formNewAd-field centered">
-          <FileLoad />
-        </div>
-        <div className="formNewAd-field centered">
-          <input
-            onChange={e => setImg(e.target.files[0])}
-            type="file"
-            name="photo"
-            accept="image/png, image/jpeg"
-          />
+          <FileLoad onFileSelect={file => setSelectedFile(file)} />
         </div>
 
         <div className="formNewAd-field centered">
@@ -119,11 +111,7 @@ const NewAdvertPage = () => {
           </Button>
         </div>
       </form>
-      {submitting && (
-        <div className="newAdPage-loading">
-          <Loader />
-        </div>
-      )}
+      {submitting && <LoaderPage />}
       {error && (
         <div className="newAdPage-error">
           <Alert message={error.message} type="error" />

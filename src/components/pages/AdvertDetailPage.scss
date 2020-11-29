@@ -32,8 +32,10 @@
   }
 }
 
-.adDetail-error {
-  text-align: center;
-  width: 400px;
-  margin: 1rem auto;
+.adDelete {
+  &-error {
+    text-align: center;
+    width: 400px;
+    margin: 1rem auto;
+  }
 }

@@ -32,6 +32,7 @@ const makeQueryString = form => {
 
 const AdvertsPage = () => {
   const userFilter = storage.get('userFilterForm') || defaultFilter;
+  const [resetFilter, setResetFilter] = useState(Date.now());
   const [adverts, setAdverts] = useState([]);
   const [queryString, setQueryString] = useState(makeQueryString(userFilter));
   const [loadingAds, setLoadingAds] = useState(true);
@@ -51,11 +52,11 @@ const AdvertsPage = () => {
       const {
         result: { rows: ads },
       } = await getAdverts(queryString);
+      setLoadingAds(false);
       setAdverts(ads);
     } catch (err) {
-      setError(err);
-    } finally {
       setLoadingAds(false);
+      setError(err);
     }
   };
 
@@ -83,7 +84,16 @@ const AdvertsPage = () => {
             </>
           ) : (
             <div>
-              <h3>Sorry, there are no ads with that filters...</h3>
+              <h3>Sorry, there are no ads with that filter...</h3>
+              <Button
+                onClick={() => {
+                  setResetFilter(Date.now());
+                  handleSubmit(defaultFilter);
+                }}
+                className="primary"
+              >
+                Reset Filter
+              </Button>
             </div>
           )}
         </div>
@@ -108,7 +118,11 @@ const AdvertsPage = () => {
     <MainLayout title="Adverts">
       <div className="advertsPage">
         <div className="advertsPage-filter">
-          <FilterForm userFilter={userFilter} onSubmit={handleSubmit} />
+          <FilterForm
+            key={resetFilter}
+            userFilter={userFilter}
+            onSubmit={handleSubmit}
+          />
         </div>
         <div className="advertsPage-content">
           {loadingAds ? <Loader /> : renderContent()}
