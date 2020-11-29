@@ -56,7 +56,14 @@ function AdvertDetailPage() {
         <h2 className="product-title">{advert.name}</h2>
         <div className="product-container">
           <div className="product-container-img">
-            <img src={`${serverUrl}${advert.photo}`} alt={advert.name} />
+            <img
+              src={
+                advert.photo
+                  ? `${serverUrl}${advert.photo}`
+                  : 'https://via.placeholder.com/600x400?text=No+Image'
+              }
+              alt={advert.name}
+            />
           </div>
 
           <div className="product-container-detail">
