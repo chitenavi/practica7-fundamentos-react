@@ -10,10 +10,10 @@ const ModalConfirm = ({ children, title, show, onClose }) => {
         <h2 className="modalConfirm-dialog--title">{title}</h2>
         <div className="modalConfirm-dialog--content">{children}</div>
         <div className="modalConfirm-dialog--actions">
-          <Button className="secondary" onClick={onClose}>
+          <Button className="secondary" onClick={() => onClose(false)}>
             Cancel
           </Button>
-          <Button className="tertiary" onClick={onClose}>
+          <Button className="tertiary" onClick={() => onClose(true)}>
             Confirm
           </Button>
         </div>
