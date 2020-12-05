@@ -102,7 +102,10 @@ const NewAdvertPage = () => {
           </Select>
         </div>
         <div className="formNewAd-field centered">
-          <FileLoad onFileSelect={file => setSelectedFile(file)} />
+          <FileLoad
+            label="Select a single image file"
+            onFileSelect={file => setSelectedFile(file)}
+          />
         </div>
 
         <div className="formNewAd-field centered">

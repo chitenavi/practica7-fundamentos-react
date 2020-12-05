@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './FileLoad.scss';
 
-const FileLoad = ({ onFileSelect }) => {
+const FileLoad = ({ onFileSelect, label }) => {
   const [fileName, setFileName] = useState('');
 
   const handleFileInput = e => {
@@ -15,20 +15,23 @@ const FileLoad = ({ onFileSelect }) => {
   };
 
   return (
-    <div>
-      <label className="fileLoad" htmlFor="file">
-        <span className="fileLoad-btn">Select a single file image</span>
-        <span className="fileLoad-filename">
-          {fileName && `Filename: ${fileName}`}
-        </span>
-        <input type="file" id="file" onChange={handleFileInput} hidden />
-      </label>
+    <div className="fileLoad">
+      <div className="fileLoad-file">
+        <label htmlFor="file">
+          <span className="fileLoad-file--btn">{label}</span>
+          <input type="file" id="file" onChange={handleFileInput} hidden />
+        </label>
+      </div>
+      <div className="filename-filename">
+        {fileName && `Filename: ${fileName}`}
+      </div>
     </div>
   );
 };
 
 FileLoad.propTypes = {
   onFileSelect: PropTypes.func.isRequired,
+  label: PropTypes.string.isRequired,
 };
 
 export default FileLoad;
