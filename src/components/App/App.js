@@ -19,6 +19,8 @@ function App({ initialToken }) {
     });
   const handleLogout = () => setTokenUser(null);
 
+  // COMPLETE: fix main route '/'. It's not necesary to check tokenUser
+
   return (
     <AuthContextProvider
       value={{
@@ -30,7 +32,7 @@ function App({ initialToken }) {
       <div className="App">
         <Switch>
           <Route path="/" exact>
-            {tokenUser ? <Redirect to="/adverts" /> : <Redirect to="/login" />}
+            <Redirect to="/adverts" />
           </Route>
           <PrivateRoute path="/adverts" exact>
             <AdvertsPage />
