@@ -1,30 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Slider, Select, Radio, Input } from 'antd';
+import { getAllTags } from '../../api/adverts';
+import useForm from '../hooks/useForm';
 import Button from './Button';
 import 'antd/dist/antd.css';
 import './FilterForm.scss';
 
 function FilferForm({ onSubmit, userFilter }) {
-  const [form, setForm] = useState(userFilter);
+  const [form, onChange] = useForm(userFilter);
+  const [selTags, setSelTags] = useState();
   const { name, type, price, tags } = form;
   const { Option } = Select;
 
-  const onSubmitForm = ev => {
+  const onSubmitForm = async ev => {
     ev.preventDefault();
     onSubmit(form);
   };
 
-  const handleFormChange = event => {
-    // console.log(event.target.name, event.target.value);
-    setForm({ ...form, [event.target.name]: event.target.value });
-  };
+  useEffect(() => {
+    getAllTags().then(stags => setSelTags(stags));
+  }, []);
+
   return (
     <div>
       <form onSubmit={onSubmitForm} className="formFilter">
         <div className="formFilter-field">
           <Input
-            onChange={handleFormChange}
+            onChange={onChange}
             name="name"
             value={name}
             placeholder="Advert name"
@@ -32,7 +35,7 @@ function FilferForm({ onSubmit, userFilter }) {
         </div>
         <div className="formFilter-field centered">
           <span className="formFilter-field--label">Type: </span>
-          <Radio.Group name="type" onChange={handleFormChange} value={type}>
+          <Radio.Group name="type" onChange={onChange} value={type}>
             <Radio style={{ color: 'white' }} value="sale">
               Sale
             </Radio>
@@ -50,7 +53,7 @@ function FilferForm({ onSubmit, userFilter }) {
           </span>
           <Slider
             onChange={value => {
-              handleFormChange({ target: { value, name: 'price' } });
+              onChange({ target: { value, name: 'price' } });
             }}
             range
             min={1}
@@ -61,17 +64,14 @@ function FilferForm({ onSubmit, userFilter }) {
         <div className="formFilter-field centered">
           <Select
             onChange={value => {
-              handleFormChange({ target: { value, name: 'tags' } });
+              onChange({ target: { value, name: 'tags' } });
             }}
             mode="tags"
             style={{ width: '75%' }}
             defaultValue={tags}
             placeholder="Select tags"
           >
-            <Option key="motor">motor</Option>
-            <Option key="mobile">mobile</Option>
-            <Option key="work">work</Option>
-            <Option key="lifestyle">lifestyle</Option>
+            {selTags && selTags.map(tag => <Option key={tag}>{tag}</Option>)}
           </Select>
         </div>
 
