@@ -15,7 +15,12 @@ const NewAdvertPage = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [error, setError] = useState(null);
   const [submitting, setSubmitting] = useState(false);
-  const [form, onChange] = useForm();
+  const [form, onChange] = useForm({
+    name: '',
+    sale: true,
+    tags: [],
+    price: 0,
+  });
   const { name, sale, tags, price } = form;
 
   const canSubmit = () => {
@@ -35,9 +40,9 @@ const NewAdvertPage = () => {
 
       if (selectedFile) formData.append('photo', selectedFile);
 
-      const res = await createAdvert(formData);
+      const newAd = await createAdvert(formData);
       setSubmitting(false);
-      if (res.ok) history.push(`/advert/${res.result._id}`);
+      history.push(`/advert/${newAd._id}`);
     } catch (err) {
       setSubmitting(false);
       setError(err);

@@ -35,14 +35,10 @@ class LoginPage extends React.Component {
     const { form } = this.state;
 
     try {
-      const authResponse = await login(form);
-      // console.log(authResponse);
-      if (!authResponse.ok) {
-        throw new Error(authResponse.error);
-      }
+      const { token } = await login(form);
 
       this.setState({ error: null });
-      onLogin(authResponse.token).then(() => history.push('/adverts'));
+      onLogin(token).then(() => history.push('/adverts'));
     } catch (error) {
       this.setState({ error });
     } finally {

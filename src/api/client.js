@@ -28,10 +28,22 @@ client.logout = () =>
     resolve();
   });
 
+// COMPLETE: improve interceptor for better response manipulation
+
 client.interceptors.response.use(
-  response => response.data,
+  response => {
+    // console.log(response);
+    if (!response.data.ok)
+      return Promise.reject(
+        new Error(response.data.error || 'Something went wrong!!'),
+      );
+
+    if (response.data.token) return response.data;
+
+    return response.data.result;
+  },
   error => {
-    throw error;
+    return Promise.reject(error);
   },
 );
 

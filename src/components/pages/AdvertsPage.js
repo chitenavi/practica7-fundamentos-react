@@ -49,9 +49,7 @@ const AdvertsPage = () => {
   const getAds = async () => {
     setLoadingAds(true);
     try {
-      const {
-        result: { rows: ads },
-      } = await getAdverts(queryString);
+      const { rows: ads } = await getAdverts(queryString);
       setLoadingAds(false);
       setAdverts(ads);
     } catch (err) {

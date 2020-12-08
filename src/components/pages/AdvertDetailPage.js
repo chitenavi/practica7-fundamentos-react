@@ -22,7 +22,7 @@ function AdvertDetailPage() {
   const getAdDetail = async adId => {
     setLoadingAd(true);
     try {
-      const { result: ad } = await getAdvertDetail(adId);
+      const ad = await getAdvertDetail(adId);
       setLoadingAd(false);
       if (!ad) history.push('/404');
       else setAdvert(ad);
@@ -36,10 +36,9 @@ function AdvertDetailPage() {
     setDeletingAd(true);
     setErrorDeleting(null);
     try {
-      const result = await deleteAdvert(id);
+      await deleteAdvert(id);
       setDeletingAd(false);
-      if (result.ok) history.push('/adverts');
-      else setErrorDeleting({ message: 'Something went wrong!' });
+      history.push('/adverts');
     } catch (err) {
       setDeletingAd(false);
       setErrorDeleting(err);
