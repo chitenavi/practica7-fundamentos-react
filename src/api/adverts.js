@@ -12,6 +12,11 @@ export const getAdvertDetail = advertId => {
   return client.get(url);
 };
 
+export const getAllTags = () => {
+  const url = `${adverstUrl}/tags`;
+  return client.get(url);
+};
+
 export const deleteAdvert = advertId => {
   const url = `${adverstUrl}/${advertId}`;
   return client.delete(url);
