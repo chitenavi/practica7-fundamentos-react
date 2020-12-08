@@ -1,12 +1,7 @@
 import { useState } from 'react';
 
-const useForm = () => {
-  const [form, setForm] = useState({
-    name: '',
-    sale: true,
-    tags: [],
-    price: 0,
-  });
+const useForm = (...formFields) => {
+  const [form, setForm] = useState(...formFields);
 
   const handleFormChange = event =>
     setForm({ ...form, [event.target.name]: event.target.value });
