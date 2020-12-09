@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Select, Radio, Input, InputNumber, Alert } from 'antd';
+import { Radio, Input, InputNumber, Alert } from 'antd';
 import useForm from '../hooks/useForm';
 import MainLayout from '../layout/MainLayout';
+import SelectTags from '../shared/SelectTags';
 import Button from '../shared/Button';
 import LoaderPage from '../shared/LoaderPage';
 import FileLoad from '../shared/FileLoad';
@@ -10,7 +11,6 @@ import { createAdvert } from '../../api/adverts';
 import './NewAdvertPage.scss';
 
 const NewAdvertPage = () => {
-  const { Option } = Select;
   const history = useHistory();
   const [selectedFile, setSelectedFile] = useState(null);
   const [error, setError] = useState(null);
@@ -91,20 +91,7 @@ const NewAdvertPage = () => {
           </div>
         </div>
         <div className="formNewAd-field">
-          <Select
-            onChange={value => {
-              onChange({ target: { value, name: 'tags' } });
-            }}
-            mode="tags"
-            style={{ width: '100%' }}
-            defaultValue={tags}
-            placeholder="Select tags"
-          >
-            <Option key="motor">motor</Option>
-            <Option key="mobile">mobile</Option>
-            <Option key="work">work</Option>
-            <Option key="lifestyle">lifestyle</Option>
-          </Select>
+          <SelectTags onChange={onChange} defaultTags={tags} />
         </div>
         <div className="formNewAd-field centered">
           <FileLoad

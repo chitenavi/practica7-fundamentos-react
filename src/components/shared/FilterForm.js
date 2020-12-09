@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { Slider, Select, Radio, Input } from 'antd';
-import { getAllTags } from '../../api/adverts';
+import { Slider, Radio, Input } from 'antd';
+import SelectTags from './SelectTags';
 import useForm from '../hooks/useForm';
 import Button from './Button';
 import 'antd/dist/antd.css';
@@ -9,18 +9,12 @@ import './FilterForm.scss';
 
 function FilferForm({ onSubmit, userFilter }) {
   const [form, onChange] = useForm(userFilter);
-  const [selTags, setSelTags] = useState();
   const { name, type, price, tags } = form;
-  const { Option } = Select;
 
   const onSubmitForm = async ev => {
     ev.preventDefault();
     onSubmit(form);
   };
-
-  useEffect(() => {
-    getAllTags().then(stags => setSelTags(stags));
-  }, []);
 
   return (
     <div>
@@ -62,17 +56,7 @@ function FilferForm({ onSubmit, userFilter }) {
           />
         </div>
         <div className="formFilter-field centered">
-          <Select
-            onChange={value => {
-              onChange({ target: { value, name: 'tags' } });
-            }}
-            mode="tags"
-            style={{ width: '75%' }}
-            defaultValue={tags}
-            placeholder="Select tags"
-          >
-            {selTags && selTags.map(tag => <Option key={tag}>{tag}</Option>)}
-          </Select>
+          <SelectTags onChange={onChange} defaultTags={tags} />
         </div>
 
         <div className="formFilter-field centered">
